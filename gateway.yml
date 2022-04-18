@@ -35,8 +35,8 @@ spring:
       client:
         registration:
           github:
-            client-id: 3d6a6fb80f8ac740be52
-            client-secret: 6307e390352e8e3314da7ff4425d6324f6418a98
+            client-id: 332865b49de007d30415
+            client-secret: 0ff451456674e4f6eac543e797ab44dc1b77cd60
   zipkin:
     base-url: http://localhost:9411/
     enabled: true
