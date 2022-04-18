@@ -10,11 +10,6 @@ spring:
           predicates:
             - Path=/movie-service/**
 
-        - id: serie-service
-          uri: lb://serie-service
-          predicates:
-            - Path=/serie-service/**
-
         - id: catalog-service
           uri: lb://catalog-service
           predicates:
