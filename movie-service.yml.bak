@@ -3,7 +3,7 @@ spring:
     name: movie-service
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/movies_database
+    url: jdbc:mysql://localhost:3306/movies_database?createDatabaseIfNotExist=true
     username: root
     password: root
   sql:
@@ -13,10 +13,20 @@ spring:
   jpa:
     deferDatasourceInitialization: true
     hibernate:
-      ddlAuto: create-drop
+      ddlAuto: update
+      naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect : org.hibernate.dialect.MySQL5Dialect
+
 
 server:
   port: 8061
+  
+  
+queue:
+  catalog:
+    name: movieQueue
 
 eureka:
   client:
