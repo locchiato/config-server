@@ -25,6 +25,37 @@ queue:
     name: SerieQueue
   movie:
     name: MovieQueue
+    
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+    description: Catalog Microservice
+  svc:
+    intanceid: ${eureka.instance.instance-id}
+    port: ${server.port}
+
+eureka:
+  client:
+    fetchRegistry: true
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always
  
 resilience4j:
   circuitbreaker:
@@ -46,36 +77,7 @@ resilience4j:
         retryExceptions:
           - feign.FeignException$InternalServerError
         
-
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info
-  info:
-    env:
-      enabled: true
-  endpoint:
-    info:
-      enabled: true
-
-info:
-  app:
-    name: ${spring.application.name}
-    version: 1.0.0
-    description: Catalog Microservice
-  svc:
-    intanceid: ${eureka.instance.instance-id}
-    port: ${server.port}
-
-eureka:
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka
-  instance:
-    hostname: localhost
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    preferIpAddress: true
+        
+logging:
+  level:
+    org.apache.catalina.core: OFF
