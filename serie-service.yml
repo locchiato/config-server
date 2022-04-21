@@ -3,7 +3,7 @@ server:
   
 spring:
   application:
-    name: serieservice
+    name: serie-service
   data:
     mongodb:
       authentication-database: admin
