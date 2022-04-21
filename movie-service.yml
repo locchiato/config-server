@@ -1,38 +1,71 @@
+
+# server:
+  # port: ${PORT:0}
+    
+server:
+  port: 8051
+  
 spring:
   application:
-    name: movie-service
+    name: movieservice
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/movies_database?createDatabaseIfNotExist=true
-    username: root
-    password: root
-  sql:
-    init:
-      mode: always
-      dataLocations: classpath:/movie-service.sql
+    url : jdbc:mysql://localhost:3306/movieservice?createDatabaseIfNotExist=true
+    username : root
+    password : Nutriarosa7
+    driverClassName : com.mysql.cj.jdbc.Driver
   jpa:
-    deferDatasourceInitialization: true
+    database : MYSQL
+    show-sql : true
     hibernate:
-      ddlAuto: update
+      ddl-auto : update
       naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
         dialect : org.hibernate.dialect.MySQL5Dialect
-
-
-server:
-  port: 8061
-  
-  
-queue:
-  movie:
-    name: movieQueue
+ 
+  zipkin:
+    base-url: http://localhost:9411/
+    enabled: true 
+  rabbitmq: 
+    username: guest 
+    password: guest 
+    host: localhost 
+    port: 5672   
+    
+queue: 
+  movie: 
+    name: MovieQueue 
+    
+# message: registro up #new
 
 eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     fetchRegistry: false
     registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
-  instance:
-    preferIpAddress: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+  info:
+    env:
+      enabled: true
+  endpoint:
+    info:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+    description: Movie Microservice
+  svc:
+    intanceid: ${eureka.instance.instance-id}
+    port: ${server.port}

@@ -9,32 +9,72 @@ spring:
           uri: lb://movie-service
           predicates:
             - Path=/movie-service/**
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: moviesService
+                fallbackUri: forward:/fallback/movies
+                
+        - id: serie-service
+          uri: lb://serie-service
+          predicates:
+            - Path=/serie-service/**
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: seriesService
+                fallbackUri: forward:/fallback/series
 
         - id: catalog-service
           uri: lb://catalog-service
           predicates:
             - Path=/catalog-service/**
+          filters:
+            - StripPrefix=2
+            - name: CircuitBreaker
+              args:
+                name: catalogService
+                fallbackUri: forward:/fallback/catalog
 
       discovery:
         locator:
           enabled: true
           lower-case-service-id: true
       default-filters:
-        - AddRequestHeader=user-request-header, custom-user-request-header
-        - AddResponseHeader=user-response-header, custom-user-response-header
         - LogFilter
-        - TokenRelay
 
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: 332865b49de007d30415
-            client-secret: 0ff451456674e4f6eac543e797ab44dc1b77cd60
   zipkin:
     base-url: http://localhost:9411/
     enabled: true
+
+queue:
+  movie:
+    name: MovieQueue
+  serie:
+    name: SerieQueue
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+  info:
+    env:
+      enabled: true
+  endpoint:
+    info:
+      enabled: true
+
+info:
+  app:
+    name: ${spring.application.name}
+    version: 1.0.0
+    description: API Gateway
+  svc:
+    intanceid: ${eureka.instance.instance-id}
+    port: ${server.port}
 
 eureka:
   instance:
