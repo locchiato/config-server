@@ -17,10 +17,11 @@ spring:
     init:
       data-locations: classpath:movie-service.sql
   jpa:
+    defer-datasource-initialization: true
     database : MYSQL
     show-sql : true
     hibernate:
-      ddl-auto : update
+      ddl-auto : create-drop
       naming-strategy : org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
