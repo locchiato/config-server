@@ -40,13 +40,12 @@ spring:
                 name: catalogService
                 fallbackUri: forward:/fallback/catalog
 
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      default-filters:
-        - LogFilter
-
+#      discovery:
+ #       locator:
+  #        enabled: true
+   #       lower-case-service-id: true
+    #  default-filters:
+     #   - LogFilter
   zipkin:
     base-url: http://localhost:9411/
     enabled: true
