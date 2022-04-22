@@ -13,9 +13,6 @@ spring:
     username : root
     password : root
     driverClassName : com.mysql.cj.jdbc.Driver
-  sql:
-    init:
-      data-locations: classpath:movieservice.sql
   jpa:
     defer-datasource-initialization: true
     database : MYSQL
